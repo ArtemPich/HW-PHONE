@@ -1,0 +1,50 @@
+import psycopg2
+
+with psycopg2.connect(database="clients_db", user="postgres", password="postgres") as conn:
+    def add_client(conn):
+        cur.execute("""
+        CREATE TABLE IF NOT EXISTS client(
+        client_id SERIAL PRIMARY KEY,
+        first_name VARCHAR(40),
+        last_name VARCHAR(40),
+        email VARCHAR(40),
+        phones INTEGER NOT NULL
+        );
+        """)
+        return cur.fetchone()
+
+    def add_phone(conn):
+        cur.execute("""
+        CREATE TABLE IF NOT EXISTS phone(
+        client_id SERIAL PRIMARY KEY,
+        phone INTEGER NOT NULL
+        );
+        """)
+        return cur.fetchone()
+
+    def change_client(conn):
+        cur.execute("""
+        INSERT INTO client VALUES(1,"Peter", "Ivanov", "Ivanov@gmail.com", 89041354020
+        );
+        """)
+        conn.commit()
+
+    def delete_phone(conn):
+        cur.execute("""
+        DELETE FROM phone WHERE client_id=%s
+        );
+        """)
+        cur.execute("""
+        SELECT FROM phone;
+        """)
+        return cur.fetchone()
+
+    def delete_client(conn):
+        cur.execute("""
+        DELETE FROM client WHERE client_id=%s;
+        """)
+        cur.execute("""
+        SELECT * FROM client;
+        """)
+        return cur.fetchone()
+    
