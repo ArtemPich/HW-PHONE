@@ -18,6 +18,7 @@ with psycopg2.connect(database="clients_db", user="postgres", password="postgres
         CREATE TABLE IF NOT EXISTS phone(
         client_id SERIAL PRIMARY KEY,
         phone INTEGER NOT NULL
+        id_client INTEGER NOT NULL REFERENCES client(client_id)
         );
         """)
         return cur.fetchone()
@@ -25,6 +26,13 @@ with psycopg2.connect(database="clients_db", user="postgres", password="postgres
     def change_client(conn):
         cur.execute("""
         INSERT INTO client VALUES(1,"Peter", "Ivanov", "Ivanov@gmail.com", 89041354020
+        );
+        """)
+        conn.commit()
+
+    def change_phone(conn):
+        cur.execute("""
+        INSERT INTO phone VALUES(1, 8901305020
         );
         """)
         conn.commit()
@@ -47,4 +55,9 @@ with psycopg2.connect(database="clients_db", user="postgres", password="postgres
         SELECT * FROM client;
         """)
         return cur.fetchone()
-    
+
+    def find_client(conn):
+        cur.execute("""
+        SELECT * FROM client;
+        """)
+        print('fetchall', cur.fetchall())
