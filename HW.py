@@ -20,36 +20,27 @@ def create_db (conn):
     """)
     return cur.fetchone()
 
-def add_client(conn):
+def add_client(conn, client_id, first_name, last_name, email, phones=None):
     cur.execute("""
-    INSERT INTO client
-    VALUES (client_id, "first_name", "last_name", "email", phones
-    ); 
+    INSERT INTO client 
     """)
+    return cur
 
-def add_phone(conn):
+def add_phone(conn, client_id, phone):
     cur.execute("""
     INSERT INTO phone
-    VALUES (phone_id, phone, id_client
-    );
     """)
+    return cur
     conn.commit()
 
-def change_client(conn):
+def change_client(conn, client_id, first_name=None, last_name=None, email=None, phones=None):
     cur.execute("""
-    INSERT INTO client VALUES(1,"Peter", "Ivanov", "Ivanov@gmail.com", 89041354020
-    );
-    """)
+    INSERT INTO client 
+        """)
+    return cur
     conn.commit()
 
-def change_phone(conn):
-    cur.execute("""
-    INSERT INTO phone VALUES(1, 8901305020
-    );
-    """)
-    conn.commit()
-
-def delete_phone(conn):
+def delete_phone(conn, client_id, phone):
     cur.execute("""
     DELETE FROM phone WHERE client_id=%s
     );
@@ -59,7 +50,7 @@ def delete_phone(conn):
     """)
     return cur.fetchone()
 
-def delete_client(conn):
+def delete_client(conn, client_id):
     cur.execute("""
     DELETE FROM client WHERE client_id=%s;
     """)
@@ -68,7 +59,7 @@ def delete_client(conn):
     """)
     return cur.fetchone()
 
-def find_client(conn):
+def find_client(conn, first_name=None, last_name=None, email=None, phone=None):
     cur.execute("""
     SELECT * FROM client;
     """)
